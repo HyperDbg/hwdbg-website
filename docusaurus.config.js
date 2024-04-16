@@ -79,6 +79,7 @@ const config = {
             label: 'HyperDbg',
           },*/
           {to: '/docs', label: 'Documentation', position: 'left'},
+          {to: 'https://hwdbg.hyperdbg.org/api', label: 'API', position: 'left'},
           {to: 'https://github.com/HyperDbg/hwdbg-fpga', label: 'FPGA Boards', position: 'left'},
           {
 			href: "https://github.com/HyperDbg/hwdbg",
@@ -97,6 +98,10 @@ const config = {
               {
                 label: 'Getting Started',
                 to: '/docs/getting-started',
+              },     
+			  {
+                label: 'API',
+                to: 'https://hwdbg.hyperdbg.org/api',
               },     
 			  {
                 label: 'FAQs',
