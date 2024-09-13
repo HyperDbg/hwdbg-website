@@ -1,4 +1,4 @@
-# The Proposed Hardware Debugger Design
+# Hardware Design
 Here, the design consideration for different components of hwdbg is discussed.
 
 

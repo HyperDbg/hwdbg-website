@@ -32,7 +32,6 @@ As a result, the TSM language in Xilinx ILA is well-suited for users who prefer 
 A sample TSM script is shown below.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 state wait_for_timeout:
     if ($counter0 == 16'u2000) then
         reset_counter $counter0;
@@ -42,13 +41,11 @@ state wait_for_timeout:
     else
         reset_counter $counter0;
     endif
-\end{lstlisting}
 ```
 
 A sample *dslang* hardware script is provided below.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 ? my_val = 0;
 ? {
 	if (my_val == 0n2000) {
@@ -60,7 +57,6 @@ A sample *dslang* hardware script is provided below.
 		my_val = 0;
 	}
 }
-\end{lstlisting}
 ```
 
 ## Detailed Analysis

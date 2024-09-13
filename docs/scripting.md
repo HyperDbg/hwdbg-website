@@ -31,14 +31,12 @@ After the debugger transmits the script buffer to the debuggee (PL), hwdbg confi
 As mentioned earlier, each execution engine comes with a small buffer (SRAM or Flip-Flop) that contains local operations to that specific stage. This buffer conducts the script evaluation engine on how to behave with the signal at the corresponding stage. The following C structure shows how these local buffers are formed in hwdbg.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 typedef struct SYMBOL {
     long long unsigned Type;
     long long unsigned Len;
     long long unsigned VariableType;
     long long unsigned Value;
  } SYMBOL, * PSYMBOL;
-\end{lstlisting}
 ```
 
 # Output Policy Stage
@@ -175,27 +173,21 @@ hwdbg's comments are like C comments. A comment starts with a slash asterisk `/*
 
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 /* comment goes here */
-\end{lstlisting}
 ```
 
 OR
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 /*
  * comment goes here
  */
-\end{lstlisting}
 ```
 
 You can create a comment on a single line.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 // comment goes here
-\end{lstlisting}
 ```
 
 ## Escape Characters
@@ -235,35 +227,27 @@ Here different scripting concepts are discussed.
 By using a simple lvalue register assignment, a hardware engineer is able to change the value of each pin (register). 
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 @register = expression;
-\end{lstlisting}
 ```
 
 ### Example 1
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 @hw_port2 = 0x55;
-\end{lstlisting}
 ```
 
 ### Example 2
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 @hw_port3 = @hw_port2;
-\end{lstlisting}
 ```
 
 ### Example 3
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (@hw_pin4 == 0x1) {
     @hw_port3 = @hw_port1 & @hw_pin1 + 12;
 }
-\end{lstlisting}
 ```
 
 ## Local Variables Assignment
@@ -272,40 +256,30 @@ In *dslang*, all the variables are defined without **type**, and all of them are
 The variables can be used as input to other functions or might be used in conditional statements. The following example shows the assigning **0** to a variable named `my\_variable`.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 my_variable = 0;
-\end{lstlisting}
 ```
 
 You can also assign registers (pins) or pseudo-registers (ports) to the variables.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 my_variable = @hw_port2 + 0x10;
-\end{lstlisting}
 ```
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 my_variable = @hw_pin2 - @hw_pin12 + 8;
-\end{lstlisting}
 ```
 
 Also, you can assign the results of functions to the variables.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 my_variable = my_function(@hw_port2);
-\end{lstlisting}
 ```
 
 Or, you can decrement or increment variables by one.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 my_variable++;      // equals to my_variable = my_variable + 1;
 my_variable--;      // equals to my_variable = my_variable - 1;
-\end{lstlisting}
 ```
 
 ## Modify Memory
@@ -322,9 +296,7 @@ Modifying memory (BRAM memory) is possible using '**eb**, **ed**, **eq**' functi
 The following code edits memory (quad-word) at 0x22 and change it to `0x1234`.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 IsEditApplied = eq(0x22, 0x1234);
-\end{lstlisting}
 ```
 
 ## Conditional Statements
@@ -334,48 +306,40 @@ Conditional statements are used to perform different actions based on different 
 The *if* statement executes some code if one condition is **true**.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (condition) {
   code to be executed if condition is true;
 }
-\end{lstlisting}
 ```
 
 ### Example (if)
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (@hw_port3 == 55) {
     printf("The third port is equal to %llx\n", @hw_port3);
 }
-\end{lstlisting}
 ```
 
 ### else
 The *else* statement is executed if the *if* condition is **false**.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (condition) {
   code to be executed if condition is true;
 }
 else {
   if the above condition is false, then else is called;
 }
-\end{lstlisting}
 ```
 
 ### Example (else)
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (@hw_port4 == 55) {
     printf("The 4th port is equal to %llx\n", @hw_port4);
 }
 else {
     printf("The 4th port is not equal to 0x55, it is equal to %llx\n", @hw_port4);
 }
-\end{lstlisting}
 ```
 
 ### elsif
@@ -383,7 +347,6 @@ else {
 Multiple *if...else* statements can be nested to create an *elsif* clause. Note that there is one *elsif* (in one word) keyword in *dslang* script engine.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (condition) {
   code to be executed if condition is true;
 }
@@ -393,13 +356,11 @@ elsif (condition) {
 else {
   if none of the above conditions are true, then else is called;
 }
-\end{lstlisting}
 ```
 
 ### Example (elsif)
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 if (@hw_port5 == 55) {
     printf("@hw_port5 is equal to 0x55\n");
 }
@@ -412,7 +373,6 @@ elsif (@hw_port5 == 77) {
 else {
     printf("@hw_port5 is not equal to 0x55, 0x66, 0x77. It is equal to %llx\n", @hw_port5);
 }
-\end{lstlisting}
 ```
 
 ### Loops
@@ -428,7 +388,6 @@ Using *snake\_case* as the naming convention is suggested. However, the user can
 This is an example of a function that does not return any value (*void*). This code defines `my\_func` which prints two integers. It's called with arguments (**1**, **2**). Then, it prints the hexadecimal value of variable `my\_var`, which is **79**.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
   void my_func(int var, int var2) {
     printf("var = %d, var2 = %d\n", var, var2);
     return;
@@ -442,7 +401,6 @@ This is an example of a function that does not return any value (*void*). This c
 
   int my_var = 79;
   printf("%x\n", my_var);
-\end{lstlisting}
 ```
 
 ### Function: int
@@ -459,7 +417,6 @@ This is an example of functions that return an *integer*. This code defines four
 Finally, it calls `my\_func4` with an argument of **2** and prints the result.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 ? {
     
   int my_func1(int var1) {
@@ -488,7 +445,6 @@ Finally, it calls `my\_func4` with an argument of **2** and prints the result.
 
   printf("%d\n", my_func4(2));
 }
-\end{lstlisting}
 ```
 
 # Extensions \& Arguments
