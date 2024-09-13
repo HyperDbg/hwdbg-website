@@ -10,14 +10,7 @@ Hardware debugging refers to the process of identifying and correcting errors wi
 ## Field-Programmable Gate Arrays (FPGAs)
 Field-Programmable Gate Arrays (FPGAs) are integrated circuits designed to be configured by the hardware designers after manufacturing. FPGAs are unique in their ability to be reprogrammed to perform a wide variety of tasks, making them a powerful tool in electronic design and testing. Their reconfigurability makes FPGAs ideal platforms for developing and deploying hardware debugging tools like hwdbg. Figure below illustrates the high-level architecture of FPGAs along with different components such as I/O Banks, Switch Matrices, CLBs, and Interconnect Wires.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.78\linewidth]{Figures/FPGA-Architecture.png}
-    \caption{Architecture and Components of FPGA. \cite{fpga_architecture}}
-    \label{fig:fpga_arch}
-\end{figure}
-```
+![Architecture and Components of FPGA. \cite{fpga_architecture}](/img/figures/FPGA-Architecture.png)
 
 ## Software Debugging Paradigms
 Software debugging paradigms refer to the strategies, tools, and processes that are used to identify, trace, and fix software code errors. Common features in software debugging include breakpoints, stepping through the instructions, and inspecting variables. hwdbg aims to bring these concepts to hardware debugging and make hardware debugging more intuitive and efficient.
@@ -49,14 +42,7 @@ Here, the technical terms used in this thesis are explained.
 
 In FPGAs, the Programmable Logic (PL) and Processing System (PS) are two main components that work together to provide a flexible hardware platform. The PL (also referred to as the FPGA part) consists of configurable logic blocks, interconnects, and other resources that can be programmed to implement custom digital circuits and functions. This allows designers to create highly customizable hardware accelerators, interfaces, and processing pipelines to meet the specific requirements of their applications. On the other hand, the PS (also referred to as the processor) is a pre-designed processing element such as an ARM processor as well as memory controllers, and peripheral interfaces. The PS provides general-purpose computing capabilities and supports standard software development tools and operating systems (e.g., Linux). By integrating the PL and PS within the same FPGA device, designers can create heterogeneous systems that leverage the strengths of both hardware and software processing paradigms. This combination enables a wide range of applications, from high-performance computing and signal processing to embedded systems and IoT devices, making FPGAs a powerful platform for the deployment of custom hardware solutions. Figure below depicts PS \<\> PL and connection components of Zynq 7000 FPGAs.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/ps-pl-arch.jpg}
-    \caption{PS/PL Based Architecture on a Zynq 7000 FPGA. \cite{asghari2023fpga}}
-    \label{fig:fpga_ps_pl}
-\end{figure}
-```
+![PS/PL Based Architecture on a Zynq 7000 FPGA. \cite{asghari2023fpga}](/img/figures/ps-pl-arch.jpg)
 
 ## Partial Reconfiguration
 Partial reconfiguration is a relatively new feature of FPGAs that allows specific regions or modules of the FPGA to be reconfigured dynamically while the rest of the device remains operational. This capability enables on-the-fly modifications to the FPGA configuration, without the need to reprogram the entire device. Partial reconfiguration is used in different parts of hwdbg mainly to satisfy the needs for executing different custom scripts.
@@ -65,14 +51,7 @@ Partial reconfiguration is a relatively new feature of FPGAs that allows specifi
 ## Block RAM (BRAM)
 Block RAM (BRAM) is an SRAM resource within FPGAs that provides high-speed, on-chip memory storage. BRAMs are fabricated into configurable blocks that can be instantiated and interconnected within the FPGA fabric to meet the memory requirements of a design. They offer several advantages over external memory solutions, including lower latency, higher bandwidth, and reduced power consumption. BRAMs support various read and write modes, as well as dual-port and distributed memory configurations. In hwdbg, a Block RAM is shared between PL and PS and the debugger communicates with PL by using this shared block RAM (e.g., send configuration commands). Figure below shows input/output ports in a dual-port BlockRAM (similar to the BRAM component used in hwdbg).
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.6\linewidth]{Figures/block-ram-dual-port.jpg}
-    \caption{Dual-port BlockRAM.}
-    \label{fig:dual_port_bram}
-\end{figure}
-```
+![Dual-port BlockRAM.](/img/figures/block-ram-dual-port.jpg)
 
 ## Advanced eXtensible Interface (AXI) Protocol
 
@@ -99,14 +78,7 @@ AXI (Advanced eXtensible Interface) is a widely-used protocol in FPGA-based syst
 
 ## MIO and EMIO
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.6\linewidth]{Figures/mio-emio-gpio.jpg}
-    \caption{GPIO Banks Connections to MIO and EMIO.}
-    \label{fig:mio_emio}
-\end{figure}
-```
+![GPIO Banks Connections to MIO and EMIO.](/img/figures/mio-emio-gpio.jpg)
 
 The PS and PL can be connected through multiple interfaces to make integration between the processor, peripherals, and the FPGA fabrics. Using these connections, PS can access resources in the PL or access to the data of different GPIO ports, or send data to the PL. The PS I/O peripherals, including the static/flash memory interfaces, share a multiplexed I/O (MIO). These pins are used to connect different GPIO Banks to the PS. There is also another type of connection called extended multiplexed I/O interface (EMIO) which is used for connecting PS directly to the PL. In hwdbg, EMIO ports are used to notify the PL (from PS) about the occurrence of a special event.
 
@@ -115,14 +87,7 @@ The PS and PL can be connected through multiple interfaces to make integration b
 The Generic Interrupt Controller (GIC) handles different shared interrupt sources, including IP implemented in the FPGA fabrics and dedicated peripherals. Each CPU has multiple external peripheral interrupts as well as internal peripheral interrupts.
 An interrupt controller multiplexes a number of possible interrupt sources on the platform for presentation to the processor. Once an interrupt is triggered, the generic interrupt handler calls an Interrupt Service Routine (ISR) and executes whenever a processor receives an interrupt request. This routine chooses which interrupt to handle by reading the Interrupt Controller registers, acknowledges the Interrupt Controller, and launches the specific interrupt handler. Figure below illustrates different components and sources of the GIC controller in ZYNQ FPGAs. hwdbg uses interrupts as a way of communicating from PL to PS, whenever an event happens that requires an action from the processor, the interrupt line goes high, indicating that the PL needs to inform PS about a special event. 
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Figures/zynq-gic.pdf}
-    \caption{Generic Interrupt Controller (GIC) in Zynq FPGAs. \cite{realdigital_2011}}
-    \label{fig:gic_zynq}
-\end{figure}
-```
+![Generic Interrupt Controller (GIC) in Zynq FPGAs. \cite{realdigital_2011}](/img/figures/zynq-gic.jpg)
 
 # Previous Works
 

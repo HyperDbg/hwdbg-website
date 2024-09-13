@@ -22,16 +22,9 @@ There are five divisions of pins in hwdbg.
 - **Input pins**: Contains [*io\_inputPin0...n*] as input pins
 - **Output pins**: Contains [*io\_outputPin0..n*] as output pins
 
-These pins are also illustrated in Figure below.
+These pins are also illustrated in figure below.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.89\linewidth]{Figures/chip-in-out.pdf}
-    \caption{Input/Output Pins in hwdbg.}
-    \label{fig:inout_chip_hwdbg}
-\end{figure}
-```
+![Input/Output Pins in hwdbg.](/img/figures/chip-in-out.jpg)
 
 ```
 \begin{table}[htbp]
@@ -92,14 +85,7 @@ These pins are also illustrated in Figure below.
 
 Figure below shows the flowchart of hwdbg from design to the bitstream generation for FPGA implementation. It starts with HDL code, which can be written in Verilog (.SV) or SystemVerilog (.V). This code is then synthesized by Xilinx Vivado into an RTL netlist (.rtl).
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.45\linewidth]{Figures/tool.pdf}
-    \caption{The High-level View of hwdbg Hardware Generator for FPGA/ASIC Design.~\cite{gorgin2024hardware}}
-    \label{fig:flowchart_of_design}
-\end{figure}
-```
+![The High-level View of hwdbg Hardware Generator for FPGA/ASIC Design.~\cite{gorgin2024hardware}](/img/figures/high-level-hardware-stack.jpg)
 
 Next, the RTL netlist is simulated using a simulator like ModelSim`~\cite{ModelSim}`. This simulation helps to ensure that the design is functioning as expected. After simulation, the design is translated into a bitstream file (.bit) using Vivado`~\cite{VivadoX}`. This bitstream file is then loaded onto the FPGA development board.
 
@@ -111,24 +97,8 @@ The FPGA development board also includes a processor system (PS) that can be use
 
 For testing artifacts, a shared PS \<\> PL project has been written to create a channel between the PS and the PL by sharing an 8 KB (can be customized) Block RAM (BRAM) as well as an interrupt line from PL to PS, and a GPIO line from PS to PL. The BRAM is made accessible for both PS and PL communication (See Section `\ref{sec:bram_sim}`). The following figure depicts the high-level design of the PS \<\> PL shared channel in Vivado. \\
 
-```
-%\begin{figure}[ht]
-%    \centering
-%    \hspace*{-1.1cm}
-%    \includegraphics[width=1.1\linewidth]{Figures/ps_pl_shared_design_view.pdf}
-%    \caption{The Block Design of PS <> PL Communication Channel}
-%    \label{fig:block_design_ps_pl}
-%\end{figure}
-```
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Figures/ps_pl_shared_channel.pdf}
-    \caption{High-level Overview of PS <> PL Communication Over AXI Bus.}
-    \label{fig:overview_of_ps_pl_communication}
-\end{figure}
-```
+![High-level Overview of PS \<\> PL Communication Over AXI Bus.](/img/figures/ps-pl-shared-channel.jpg)
 
 # Communication Protocols
 
@@ -136,14 +106,7 @@ The communication protocol follows a packet-based design between sender and rece
 
 For the communication between PL and PS, the following structure is used.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/packet_memory.png}
-    \caption{The Format of Action Request Packets from PS <> PL Communication.}
-    \label{fig:structure_coomunication}
-\end{figure}
-```
+![The Format of Action Request Packets from PS \<\> PL Communication.](/img/figures/packet-memory.png)
 
 This design uses four mandatory fields. The first is the `checksum` of the incoming/outgoing packet primarily used for checking whether the packet is modified communication problems. The second field is the `indicator` of the packet which is used to identify that the packet is related to a HyperDbg-compatible interpreter. The following table shows an example of a valid indicator.
 
@@ -219,14 +182,7 @@ Since there is only one port shared with PS and PL has only one port to the Bloc
 
 This module is responsible for transmitting data from the hardware debugger (hwdbg) or the Programmable Logic (PL) to the Processor System (PS). It handles the process of packaging the data into packets suitable for transmission and sending them out through the designated port. Additionally, it adds different headers and manages any necessary handshaking protocols, and adjusts mandatory fields to ensure successful data transmission.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/sending_data_fsm.pdf}
-    \caption{The FSM of How Sending Module Works.}
-    \label{fig:sending_data_fsm}
-\end{figure}
-```
+![The FSM of How Sending Module Works.](/img/figures/sending-data-fsm.jpg)
 
 This module ensures the orderly and correct transmission of data from the module to the designated receiver. The state machine of the module begins in the `sIdle` state, where it initializes key variables and awaits the signal to begin sending data (`beginSendingBuffer = 1`). Once this signal is received, the sender module transitions to the `sWriteChecksum` state, where it writes the checksum offset and initializes the data transfer process.
 
@@ -236,14 +192,7 @@ Next, to prepare headers it moves to various states such as `sWriteIndicator`, `
 
 The receiving module is responsible for capturing incoming data from PS and passing it to the hwdbg for further processing. It monitors the designated port (PS to PL shared line) for incoming data packets, retrieves them, checks for validity, and forwards them to the appropriate components within the debugger for interpretation or storage.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/receiver_fsm.pdf}
-    \caption{The FSM of How Receiving Module Works.}
-    \label{fig:receiver_fsm}
-\end{figure}
-```
+![The FSM of How Receiving Module Works.](/img/figures/receiver-fsm.jpg)
 
 The above figure depicts the Moore FSM of the receiving module for the sequence of operations required to process incoming data packets. The process begins in the `sIdle` state, where the module awaits a valid signal (`pllInSignal = 1`) to transition to the next states for reading packet data. Upon receiving the signal, the FSM moves to `sReadChecksum` to verify the integrity of the data packet by reading the checksum from the specified offset. Following a successful checksum read, the FSM transitions to `sReadIndicator` to read an indicator value that determines the type of packet being processed.
 
@@ -253,23 +202,10 @@ The FSM proceeds to the `sReadTypeOfThePacket` state, where it identifies the pa
 
 This module plays a crucial role in ensuring that the sending and receiving operations within the hwdbg occur without conflicts. It manages the timing and coordination between the sending and receiving modules, preventing them from attempting to access the shared resources simultaneously. Other than that, based on the fact that Xilinx FPGAs are manufactured with BRAMs with two ports, one port is shared with PS, and the other one is shared with PL, thus, no two modules (in PL) can use a single port simultaneously. By enforcing synchronization, this module helps prevent data corruption between multiple modules (in PL) and ensures the integrity of communications between the debugger and the PL/PS.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/send_receive_data_synchronizer_fsm.pdf}
-    \caption{The FSM of How Sender/Receiver Synchronization Module Works.}
-    \label{fig:send_receive_data_synchronizer_fsm}
-\end{figure}
-```
+![The FSM of How Sender/Receiver Synchronization Module Works.](/img/figures/send-receive-data-synchronizer-fsm.jpg)
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\linewidth]{Figures/wavedrom-synch-module.pdf}
-    \caption{The Wave Demonstration of How Sender/Receiver Synchronization Module Works.}
-    \label{fig:send_receive_data_synchronizer_wave}
-\end{figure}
-```
+
+![The Wave Demonstration of How Sender/Receiver Synchronization Module Works.](/img/figures/wavedrom-synch-module.jpg)
 
 The diagram illustrates the Moore FSM and the figure is the waveform of the synchronizer module in the hwdbg hardware debugger, responsible for coordinating the sending and receiving of data. The FSM begins in the `sIdle` state, where all control signals (`wrEna`, `rdWrAddr`, `wrData`, `rdData`) are initialized to zero, awaiting a trigger to commence data operations. When the `pllInSignal` is asserted (`pllInSignal = 1`), the FSM transitions to the `sReceiver` state, where it performs data reading tasks. In this state, the address for reading is set (`rdWrAddr = requested addr`), and the data to be read is managed. The module remains in `sReceiver` until the `finishedReceivingBuffer` signal is set, indicating that the data reception process is complete.
 
@@ -279,25 +215,11 @@ Following the reception, the FSM moves back to the `sIdle` state until condition
 
 Once valid data is received from either the PS, the interpreting module takes charge of analyzing the incoming packets. It decodes the received data, interprets its meaning or purpose, and triggers any necessary actions or responses within the hwdbg. This module involves parsing incoming commands, executing debugging operations, or generating responses to be sent back to the PS.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/interpreter_fsm.pdf}
-    \caption{The FSM of How Interpreter Module Works.}
-    \label{fig:interpreter_fsm}
-\end{figure}
-```
+![The FSM of How Interpreter Module Works.](/img/figures/interpreter-fsm.jpg)
 
 The diagram (See Figure `\ref{fig:interpreter_fsm}`) illustrates the Moore FSM and Figure `\ref{fig:interpreter_wave}` demonstrates the waveform of the interpreter module of the hwdbg hardware debugger. This module is designed to process incoming data packets and generate appropriate responses based on the actions requested by these packets. Initially, the FSM is in the `sIdle` state, where it remains until a valid packet input is received from the receiver module (`requestedActionOfThePacketInputValid = 1`). In this state, no new data is being received or sent by the interpreter (`noNewDataReceiver = 0`, `noNewDataSender = 0`).
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\linewidth]{Figures/wavedrom-interpreter.pdf}
-    \caption{The Wave Demonstration of How Interpreter Module Works.}
-    \label{fig:interpreter_wave}
-\end{figure}
-```
+![The Wave Demonstration of How Interpreter Module Works.](/img/figures/wavedrom-interpreter.jpg)
 
 Upon detecting a valid packet input, the FSM transitions to the receiving (`sNewActionReceived`) state. Here, the module interprets the requested action and prepares the response (`requestedActionOfThePacketOutput = adequate response`). If the action is invalid, an error flag (`lastError = if invalid action received`) is set. After processing the action, the FSM moves to the `sSendResponse` state, where it prepares to send the response data. In this state, the module sets signals indicating it is ready to send data (`noNewDataReceiver = 1`, `beginSendingBuffer = 1`) and the data to be sent is made available (`sendingData = module data`). If further synchronization is required, the FSM ensures that the data is valid and waits for the buffer to be ready (`sendWaitForBuffer = 0`).
 

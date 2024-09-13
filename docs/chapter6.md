@@ -57,14 +57,7 @@ Automated fuzzing involves the automated generation and injection of a large vol
 
 Fault injection is a technique used to test the robustness and reliability of hardware by injecting faults into the system. This method helps in understanding how a system behaves under error conditions and in validating the effectiveness of fault tolerance mechanisms. There are various methods of fault injection, including physical, logical, and software-based techniques. hwdbg can use fault injection to simulate a wide range of fault conditions, thereby ensuring that the system can handle real-world scenarios and recover gracefully from faults. The below figure illustrates the basic components of an error injection environment.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Figures/basic-fault-injection.pdf}
-    \caption{Basic Components of an Error Injection Environment. \cite{ruano2021fault}}
-    \label{fig:fault_injection}
-\end{figure}
-```
+![Basic Components of an Error Injection Environment. \cite{ruano2021fault}](/img/figures/basic-fault-injection.jpg)
 
 ## Cut The Signal
 
@@ -74,11 +67,4 @@ Cutting the signal involves intentionally breaking the continuity of a signal pa
 
 Changing the clock domain using Pulse Width Modulation (PWM) involves altering the clock signal supplied to a part of the circuit. PWM can vary the duty cycle of the clock signal, effectively modifying the clock frequency and simulating various timing scenarios. This technique can be used to test the behavior of the hardware under different clock conditions, such as overclocking, underclocking, and clock glitches. By using PWM to change the clock domain, hwdbg can test the timing resilience of the system, ensure that it operates correctly across a range of clock frequencies, and identify any timing-related faults or vulnerabilities. The following figure demonstrates PWM signals with 50\%, 10\%, 30\%, and 70\% duty cycles.
 
-```
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.71\linewidth]{Figures/pwm.jpg}
-    \caption{PWM Signals with Different Duty Cycles.}
-    \label{fig:pwm}
-\end{figure}
-```
+![PWM Signals with Different Duty Cycles.](/img/figures/pwm.jpg)
