@@ -57,24 +57,12 @@ Block RAM (BRAM) is an SRAM resource within FPGAs that provides high-speed, on-c
 
 AXI (Advanced eXtensible Interface) is a widely-used protocol in FPGA-based systems for high-performance communication between IP cores and memory-mapped peripherals. Table below depicts different types of AXI protocol.
 
-```
-\begin{table}
-\centering
-\caption{Overview of AXI Protocols.}
-\label{tab:axi}
-\begin{tabular}{ll} 
-\hline
-**\footnotesize Protocol** & **\footnotesize Description**                                                                                                                                                                                                                                                                                                                                                                                       \\ 
-\hline
-\scriptsize	AXI4              & \begin{tabular}[c]{@{}l@{}} \scriptsize	 AXI4 (Advanced eXtensible Interface 4) is the most commonly used variant of the AXI protocol. \\\scriptsize It features separate read and write channels, support for multiple transactions, burst transfers, and \\\scriptsize advanced features such as QoS (Quality of Service) and address tagging.\end{tabular}                                                                                    \\ 
-\hline
-\scriptsize	AXI-Lite          & \begin{tabular}[c]{@{}l@{}}\scriptsize AXI-Lite is a simplified version of the AXI protocol designed for lightweight and low-bandwidth \\\scriptsize communication between the master and slave components in an FPGA-based system. Unlike AXI4, \\\scriptsize AXI-Lite supports only single-beat transactions, does not include burst transfers or multiple \\\scriptsize transactions, and has reduced signaling requirements.\end{tabular}  \\ 
-\hline
-\scriptsize	AXI-Stream        & \begin{tabular}[c]{@{}l@{}}\scriptsize AXI-Stream is a specialized variant of the AXI protocol optimized for streaming data transfers,\\\scriptsize such as audio and video processing, signal processing, and data streaming applications. Unlike \\\scriptsize  AXI4 and AXI-Lite, which use separate channels for read and write operations, AXI-Stream \\\scriptsize  employs a single unidirectional channel for data transfer.\end{tabular}           \\
-\hline
-\end{tabular}
-\end{table}
-```
+| **Protocol**   | **Description**                                                                                                                                                                                                                                                                                                                                                                                                         |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AXI4           | AXI4 (Advanced eXtensible Interface 4) is the most commonly used variant of the AXI protocol. It features separate read and write channels, support for multiple transactions, burst transfers, and advanced features such as QoS (Quality of Service) and address tagging.                                                                                                      |
+| AXI-Lite       | AXI-Lite is a simplified version of the AXI protocol designed for lightweight and low-bandwidth communication between the master and slave components in an FPGA-based system. Unlike AXI4, AXI-Lite supports only single-beat transactions, does not include burst transfers or multiple transactions, and has reduced signaling requirements. |
+| AXI-Stream     | AXI-Stream is a specialized variant of the AXI protocol optimized for streaming data transfers, such as audio and video processing, signal processing, and data streaming applications. Unlike AXI4 and AXI-Lite, which use separate channels for read and write operations, AXI-Stream employs a single unidirectional channel for data transfer.    |
+
 
 ## MIO and EMIO
 

@@ -83,31 +83,21 @@ Logic Analyzer Capabilities: Both hwdbg and Xilinx ILA function effectively as l
 
 The following table depicts the differences between Xilinx TSM and hwdbg *dslang*.
 
-```
-\begin{table}
-\centering
-\scriptsize
-\caption{Comparison of hwdbg (dslang) and Xilinx ILA (TSM).}
-\label{tab:comparison}
-\begin{tblr}{
-  hline{1-2,14} = {-}{},
-}
-**Feature**                                                                    &  **hwdbg** (dslang)              & **Xilinx ILA (TSM)** \\
-Can act as a logic analyzer                                                    & Yes                              & Yes                 \\
-Speed comparison                                                               & Slower                           & Faster              \\
-Can trigger an event (e.g., a breakpoint)                                      & Yes                              & Yes                 \\
-Has debugging sensors                                                          & Yes                              & No                  \\
-Can modify signals on the fly (configurable)                                   & Yes                              & No                  \\
-Can interpret complex computations                                             & Yes                              & No                  \\
-Supports on-the-fly configuration                                              & Yes                              & No                  \\
-Notify the debugger without triggering event                                   & Yes                              & No                  \\
-Supports software stepping                                                     & Yes                              & No                  \\
-Simplicity of state machine scripting                                          & Simpler, software-like scripting & More complex        \\
-Can perform stepping fault-injection and signal manipulation                   & Yes                              & No                  \\
-Can perform active debugging (producing fuzzing signals)                       & Yes                              & No                  
-\end{tblr}
-\end{table}
-```
+| **Feature**                                                            | **hwdbg** (dslang)               | **Xilinx ILA (TSM)** |
+|------------------------------------------------------------------------|----------------------------------|----------------------|
+| Can act as a logic analyzer                                             | Yes                              | Yes                  |
+| Speed comparison                                                        | Slower                           | Faster               |
+| Can trigger an event (e.g., a breakpoint)                               | Yes                              | Yes                  |
+| Has debugging sensors                                                   | Yes                              | No                   |
+| Can modify signals on the fly (configurable)                            | Yes                              | No                   |
+| Can interpret complex computations                                      | Yes                              | No                   |
+| Supports on-the-fly configuration                                       | Yes                              | No                   |
+| Notify the debugger without triggering event                            | Yes                              | No                   |
+| Supports software stepping                                              | Yes                              | No                   |
+| Simplicity of state machine scripting                                   | Simpler, software-like scripting | More complex         |
+| Can perform stepping fault-injection and signal manipulation            | Yes                              | No                   |
+| Can perform active debugging (producing fuzzing signals)                | Yes                              | No                   |
+
 
 # Limitations
 Debugging capabilities are limited by the clock frequency of the FPGA used in hwdbg. FPGAs typically operate at much lower clock frequencies than high-speed CPUs, such as a 4 GHz CPU, making it impractical to debug these high-frequency components with hwdbg. This difference in clock speeds means that FPGAs cannot capture or analyze signals that change at such high rates.

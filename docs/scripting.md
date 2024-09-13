@@ -52,30 +52,18 @@ hwdbg use HyperDbg scripting (*dslang*) syntax which is a MASM-like syntax to ev
 ## Keywords
 The keywords shown below are valid in hwdbg scripts.
 
-```
-\begin{table}[htbp]
-\centering
-\caption{Supported Keywords in hwdbg.}
-\label{tab:keywords}
-\scriptsize
-\begin{tabular}{lll}
-\hline
-**Keyword** & **Description** \\
-\hline
-poi & Pointer-sized data from the specified address (dereference) \\
-ref & Reference address of the specified variable  \\
-db & Low 8 bits (dereference) \\
-hi & High 16 bits (dereference) \\
-low & Low 16 bits (dereference) \\
-dw & Low 16 bits (dereference) \\
-dd & Low 32 bits (dereference) \\
-dq & 64 bits (dereference) \\
-not & Flip each and every bit \\
-neg & True/False logic flipping \\
-\hline
-\end{tabular}
-\end{table}
-```
+| **Keyword** | **Description**                                              |
+|-------------|--------------------------------------------------------------|
+| poi         | Pointer-sized data from the specified address (dereference)   |
+| ref         | Reference address of the specified variable                  |
+| db          | Low 8 bits (dereference)                                     |
+| hi          | High 16 bits (dereference)                                   |
+| low         | Low 16 bits (dereference)                                    |
+| dw          | Low 16 bits (dereference)                                    |
+| dd          | Low 32 bits (dereference)                                    |
+| dq          | 64 bits (dereference)                                        |
+| not         | Flip each and every bit                                       |
+| neg         | True/False logic flipping                                     |
 
 ## Operators
 
@@ -85,85 +73,49 @@ Multiple operators are supported in hwdbg. Note that operators like **multiplica
 
 Operator precedence in normal expressions (assignments) is shown in Table below.
 
-```
-\begin{table}[htbp]
-\centering
-\caption{Operator Precedence (Expressions and Assignments).}
-\label{tab:operator_precedence_expr}
-\scriptsize
-\begin{tabular}{lll}
-\hline
-**Operators** & **Description** \\
-\hline
-() & Parentheses \\
--+\textasciitilde * \& & Unary Operators (Unary negative, Unary positive, \\ & Bitwise not, Reference, Address of) \\
-/\%* & Arithmetic Operators (Division, Modulo, Multiplication) \\
-+- & Arithmetic Operators (Addition, Subtraction) \\
-<$$$$< >$$$$> & Shift Operators (Right shift, Left shift) \\
-\& & Bitwise AND Operator \\
-\textasciicircum  & Bitwise XOR Operator (exclusive OR) \\
-| & Bitwise OR Operator \\
-\hline
-\end{tabular}
-\end{table}
-```
+| **Operators**                | **Description**                                                |
+|------------------------------|----------------------------------------------------------------|
+| ()                           | Parentheses                                                    |
+| -+ ~ * &                     | Unary Operators (Unary negative, Unary positive, Bitwise not, Reference, Address of) |
+| / % *                        | Arithmetic Operators (Division, Modulo, Multiplication)        |
+| +-                           | Arithmetic Operators (Addition, Subtraction)                  |
+| \<\< \>\>                        | Shift Operators (Right shift, Left shift)                     |
+| &                            | Bitwise AND Operator                                           |
+| ^                            | Bitwise XOR Operator (exclusive OR)                           |
+| \|                           | Bitwise OR Operator                                            |
 
 ### Operator Precedence/Priority (Boolean Expressions)
 The following table shows operator precedence in boolean expressions.
 
-```
-\begin{table}[htbp]
-\centering
-\caption{Operator Precedence (Boolean Expressions).}
-\label{tab:operator_precedence_boolean_expr}
-\scriptsize
-\begin{tabular}{lll}
-\hline
-**Operators** & **Description** \\
-\hline
-() & Parentheses \\
--+\textasciitilde * \& & Unary Operators (Unary negative, Unary positive, \\ & Bitwise not, Reference, Address of) \\
-/\%* & Arithmetic Operators (Division, Modulo, Multiplication) \\
-+- & Arithmetic Operators (Addition, Subtraction) \\
-<$$$$< >$$$$> & Shift Operators (Right shift, Left shift) \\
->= < > <= ==  != & Shift Operators (Comparison operators) \\
-\& & Bitwise AND Operator \\
-\textasciicircum  & Bitwise XOR Operator (exclusive OR) \\
-| & Bitwise OR Operator \\
-\&\& & Logical AND \\
-|| & Logical OR \\
-\hline
-\end{tabular}
-\end{table}
-```
+| **Operators**                | **Description**                                                |
+|------------------------------|----------------------------------------------------------------|
+| ()                           | Parentheses                                                    |
+| -+ ~ * &                     | Unary Operators (Unary negative, Unary positive, Bitwise not, Reference, Address of) |
+| / % *                        | Arithmetic Operators (Division, Modulo, Multiplication)        |
+| +-                           | Arithmetic Operators (Addition, Subtraction)                  |
+| \<\< \>\>                        | Shift Operators (Right shift, Left shift)                     |
+| \>= \< \> \<= == !=              | Comparison operators                                           |
+| &                            | Bitwise AND Operator                                           |
+| ^                            | Bitwise XOR Operator (exclusive OR)                           |
+| \|                           | Bitwise OR Operator                                            |
+| &&                           | Logical AND                                                    |
+| \|\|                         | Logical OR                                                     |
 
 ## Registers \& Pseudo-registers
 Here are the current registers and pseudo-registers supported by the script engine (See Table below). Note that registers (pins) start with '`@`' and pseudo-registers (ports) start with '`\$`'.
 
-```
-\begin{table}[htbp]
-\centering
-\caption{Registers and Pseudo-registers.}
-\label{tab:regs_and_pseudo_regs}
-\scriptsize
-    \begin{tabular}{@{}>{\raggedright}p{4cm}p{8cm}@{}}
-        \toprule
-        **Registers** & **Pseudo-registers** \\
-        \midrule
-        `@hw\_pin0` & \multirow{4}{8cm}{$`\$hw\_clk`$, or $`\$hw\_clock`$: 1 or 0} \\
-        `@hw\_pin1` & \\
-        `...` & \\
-        `@hw\_pinX` & \\
-        `@hw\_port0` & \multirow{2}{8cm}{$`\$hw\_counter`$ and, $`\$hw\_clock\_edge\_counter`$} \\
-        `@hw\_port1` & \\
-        `...` & \\
-        `@hw\_portX` & \multirow{1}{8cm}{$`\$hw\_clock\_frequency`$} \\
-        `...` & \\
-        `@hw\_stage` & \multirow{1}{8cm}{$`\$hw\_stage`$: Stage number of script} \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-```
+| **Registers**    | **Pseudo-registers**                                                                 |
+|------------------|--------------------------------------------------------------------------------------|
+| `@hw_pin0`       | `$hw_clk`, or `$hw_clock`: 1 or 0                                                    |
+| `@hw_pin1`       |                                                                                      |
+| `...`            |                                                                                      |
+| `@hw_pinX`       |                                                                                      |
+| `@hw_port0`      | `$hw_counter`, and `$hw_clock_edge_counter`                                           |
+| `@hw_port1`      |                                                                                      |
+| `...`            |                                                                                      |
+| `@hw_portX`      | `$hw_clock_frequency`                                                                |
+| `...`            |                                                                                      |
+| `@hw_stage`      | `$hw_stage`: Stage number of script                                                  |
 
 ## Number Prefixes
 By default, hwdbg interprets the numbers as hex (base 16). If you want to specify other forms of a number, you should use MASM prefixes. In all MASM expressions, numeric values are interpreted as numbers in the current radix (16, 10, or 8). You can override the default radix by specifying the `0x` prefix (hexadecimal), the `0n` prefix (decimal), the `0t` prefix (octal), or the `0y` prefix (binary).
@@ -197,27 +149,16 @@ Special characters such as `\textbackslash n` and `\textbackslash t`, are used t
 
 hwdbg supports multiple pre-defined functions. In the first release, the functions shown in the table below are supported. Note that, to make the debugger smaller (utilizing fewer resources), hardware engineers can configure it to remove the support for these functions.
 
-```
-\begin{table}[htbp]
-\scriptsize
-\centering
-\caption{Description of Functions and Their Purposes.}
-\label{tab:functions}
-\begin{tabular}{@{}ll@{}}
-\toprule
-**Function**         & **Description**                                               \\ \midrule
-`printf`           & Send an input message to the debugger                              \\
-`hw\_trigger`      & Trigger an event       
-\\
-`hw\_block\_all`   & Block sending any output (output zero)                        \\
-`hw\_unblock\_all` & Unblock sending any output (output valid)                     \\
-`hw\_pin\_block`   & Block sending specific pin output (pin output zero)           \\
-`hw\_port\_block`  & Block sending specific port output (port output zero)         \\
-`hw\_pin\_unblock` & Unblock sending specific pin output (pin output valid)        \\
-`hw\_port\_unblock`& Unblock sending specific port output (port output valid)      \\ \bottomrule
-\end{tabular}
-\end{table}
-```
+| **Function**        | **Description**                                            |
+|---------------------|------------------------------------------------------------|
+| `printf`            | Send an input message to the debugger                      |
+| `hw_trigger`        | Trigger an event                                           |
+| `hw_block_all`      | Block sending any output (output zero)                     |
+| `hw_unblock_all`    | Unblock sending any output (output valid)                  |
+| `hw_pin_block`      | Block sending specific pin output (pin output zero)        |
+| `hw_port_block`     | Block sending specific port output (port output zero)      |
+| `hw_pin_unblock`    | Unblock sending specific pin output (pin output valid)     |
+| `hw_port_unblock`   | Unblock sending specific port output (port output valid)   |
 
 # Hardware Scripting
 

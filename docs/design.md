@@ -26,60 +26,13 @@ These pins are also illustrated in figure below.
 
 ![Input/Output Pins in hwdbg.](/img/figures/chip-in-out.jpg)
 
-```
-\begin{table}[htbp]
-    \centering
-    \caption{Description of Pin Divisions.}
-    \label{tab:pin_divisions}
-    \begin{tabular}{@{}llp{6cm}@{}}
-    \toprule
-    **\footnotesize Division** & **\footnotesize	Pin** & **\footnotesize Description** \\ 
-    \midrule
-    \footnotesize Chip Pins & 
-    \begin{tabular}[t]{@{}l@{}}
-    \footnotesize clock \\ 
-    \footnotesize reset \\ 
-    \footnotesize io\_en \\
-    \end{tabular} & 
-    \begin{tabular}[t]{@{}p{6cm}@{}}
-    \footnotesize Clock signal (input) \\ 
-    \footnotesize Reset signal (input) \\ 
-    \footnotesize Chip enable signal (input) \\
-    \end{tabular} \\ 
-    \midrule
-    \footnotesize Interrupt Lines & 
-    \begin{tabular}[t]{@{}l@{}}
-    \footnotesize io\_plInSignal \\ 
-    \footnotesize io\_psOutInterrupt \\
-    \end{tabular} & 
-    \begin{tabular}[t]{@{}p{6cm}@{}}
-    \footnotesize PS to PL signal (input) \\ 
-    \footnotesize PL to PS interrupt (output) \\
-    \end{tabular} \\ 
-    \midrule
-    \footnotesize BRAM Ports & 
-    \begin{tabular}[t]{@{}l@{}}
-    \footnotesize io\_rdData \\ 
-    \footnotesize io\_rdWrAddr \\ 
-    \footnotesize io\_wrEna \\ 
-    \footnotesize io\_wrData \\
-    \end{tabular} & 
-    \begin{tabular}[t]{@{}p{6cm}@{}}
-    \footnotesize Read data (input) \\ 
-    \footnotesize Read/write address (output) \\ 
-    \footnotesize Enable writing (output) \\ 
-    \footnotesize Write data (output) \\
-    \end{tabular} \\ 
-    \midrule
-    \multirow{2}{*}{\footnotesize Input Pins} & \footnotesize io\_inputPin0...n & \multirow{2}{*}{\footnotesize Input pins (input)} \\
-    & \footnotesize (customizable) & \\
-    \midrule
-    \multirow{2}{*}{\footnotesize Output Pins} & \footnotesize io\_outputPin0...n & \multirow{2}{*}{\footnotesize Output pins (output)} \\
-    & \footnotesize (customizable) & \\
-    \bottomrule
-    \end{tabular}
-\end{table}
-```
+| **Division**        | **Pin**                        | **Description**                          |
+|---------------------|--------------------------------|------------------------------------------|
+| Chip Pins           | clock, reset, io\_en           | Clock signal (input), Reset signal (input), Chip enable signal (input) |
+| Interrupt Lines     | io\_plInSignal, io\_psOutInterrupt | PS to PL signal (input), PL to PS interrupt (output) |
+| BRAM Ports          | io\_rdData, io\_rdWrAddr, io\_wrEna, io\_wrData | Read data (input), Read/write address (output), Enable writing (output), Write data (output) |
+| Input Pins          | io\_inputPin0...n (customizable) | Input pins (input)                       |
+| Output Pins         | io\_outputPin0...n (customizable) | Output pins (output)                     |
 
 # Design Flow
 
@@ -110,48 +63,23 @@ For the communication between PL and PS, the following structure is used.
 
 This design uses four mandatory fields. The first is the `checksum` of the incoming/outgoing packet primarily used for checking whether the packet is modified communication problems. The second field is the `indicator` of the packet which is used to identify that the packet is related to a HyperDbg-compatible interpreter. The following table shows an example of a valid indicator.
 
-```
-\begin{table}[htbp]
-    \centering
-    \scriptsize
-    \caption{HyperDbg Packet Indicator Constant.}
-    \label{tab:hyperdbg_constants}
-    \begin{tabular}{@{}ll@{}}
-        \toprule
-        **Constant Name** & **Value** \\
-        \midrule
-        INDICATOR\_OF\_HYPERDBG\_PACKET & 0x4859504552444247 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-```
+| **Constant Name**                 | **Value**             |
+|-----------------------------------|-----------------------|
+| INDICATOR\_OF\_HYPERDBG\_PACKET   | 0x4859504552444247    |
 
 The third field is `TypeOfThePacket`. Two exclusive packet types are owned by hwdbg for sending data from debugger (PS) to debugged (PL) and from debuggee (PL) to debugger (PS).
 
-```
-\begin{table}[htbp]
-    \centering
-    \scriptsize
-    \caption{Packet Types in HyperDbg.}
-    \label{tab:packet_types}
-    \begin{tabular}{@{}ll@{}}
-        \toprule
-        **Packet Type** & **Description** \\
-        \midrule
-        DEBUGGER\_TO\_DEBUGGEE\_EXECUTE\_ON\_VMX\_ROOT & Debugger to debuggee (VMX-root) \\
-        DEBUGGER\_TO\_DEBUGGEE\_EXECUTE\_ON\_USER\_MODE & Debugger to debuggee (user-mode) \\
-        DEBUGGEE\_TO\_DEBUGGER & Debuggee to debugger (user/kernel \& VMX-root) \\
-        DEBUGGER\_TO\_DEBUGGEE\_HARDWARE\_LEVEL & Debugger to debuggee (hardware), used in hwdbg \\
-        DEBUGGEE\_TO\_DEBUGGER\_HARDWARE\_LEVEL & Debuggee to debugger (hardware), used in hwdbg \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-```
+| **Packet Type**                                       | **Description**                               |
+|------------------------------------------------------|-----------------------------------------------|
+| DEBUGGER\_TO\_DEBUGGEE\_EXECUTE\_ON\_VMX\_ROOT        | Debugger to debuggee (VMX-root)               |
+| DEBUGGER\_TO\_DEBUGGEE\_EXECUTE\_ON\_USER\_MODE       | Debugger to debuggee (user-mode)              |
+| DEBUGGEE\_TO\_DEBUGGER                               | Debuggee to debugger (user/kernel & VMX-root) |
+| DEBUGGER\_TO\_DEBUGGEE\_HARDWARE\_LEVEL              | Debugger to debuggee (hardware), used in hwdbg|
+| DEBUGGEE\_TO\_DEBUGGER\_HARDWARE\_LEVEL              | Debuggee to debugger (hardware), used in hwdbg|
 
 The communication structure is synchronized between hwdbg (written in Scala) and __HyperDbg__ (written in C) and it is demonstrated as follows:
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 /**
  * @brief The structure of remote packets in HyperDbg
  *
@@ -163,7 +91,6 @@ typedef struct _DEBUGGER_REMOTE_PACKET
     DEBUGGER_REMOTE_PACKET_TYPE             TypeOfThePacket;
     DEBUGGER_REMOTE_PACKET_REQUESTED_ACTION RequestedActionOfThePacket;
 } DEBUGGER_REMOTE_PACKET, *PDEBUGGER_REMOTE_PACKET;
-\end{lstlisting}
 ```
 
 # Main Communication Modules
@@ -235,7 +162,6 @@ To verify the functionality and correctness of the hwdbg, the data in the BlockR
 The following listing is an example of PS/PL shared BlockRAM contents shown in the BRAM simulator.
 
 ```
-\begin{lstlisting}[basicstyle=\small\ttfamily,lineskip=-0.1ex]
 Number of clock cycles spent in debuggee (PL): 0
 Number of clock cycles spent in debuggee (PL): 10
 Number of clock cycles spent in debuggee (PL): 20
@@ -268,5 +194,4 @@ mem_136: 00000009
 mem_137: 0000000b
 mem_138: 00000000
 ...
-\end{lstlisting}
 ```
