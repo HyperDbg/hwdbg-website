@@ -29,7 +29,7 @@ These manipulation (stopping/running) clock signals are considered as the simila
 
 ## Cutting The Signals Based on Conditions (Putting Breakpoints and Pausing The Debuggee)
 
-As the emulation of putting breakpoints in software debugging, hwdbg comes with the ability to evaluate conditions and trigger events when the conditions are met. The script engine evaluation core (described in Chapter `\ref{Chapter:Debugger_Script}`) is responsible for comparing and evaluating conditions (using `if` statements) and when the conditions are satisfied, different functions can be used to further pause the execution (pause passing the clock signal to the chip) or produce user configured input instead of the real signal values.
+As the emulation of putting breakpoints in software debugging, hwdbg comes with the ability to evaluate conditions and trigger events when the conditions are met. The script engine evaluation core is responsible for comparing and evaluating conditions (using `if` statements) and when the conditions are satisfied, different functions can be used to further pause the execution (pause passing the clock signal to the chip) or produce user configured input instead of the real signal values.
 
 Using these components and facilities, a hardware engineer or a security researcher can investigate chips and IP cores and analyze them effectively.
 

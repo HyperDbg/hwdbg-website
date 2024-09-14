@@ -18,13 +18,13 @@ The evaluation is conducted in the Programmable Logic (PL) rather than the PS be
 
 # Configure Port Adjustments
 
-Upon generating the debugger hardware, the user is able to specify the exact **pin** and **port** configuration. Each **pin** is considered a single input wire (in VHDL `STD\_LOGIC`), while each **port** consists of multiple pins grouped together to form a meaningful value (in VHDL `STD\_LOGIC\_VECTOR`). Once the configuration is done, the generated debugger contains registers (refers to pins) and pseudo-registers (refers to ports). These pins and ports are accessible through custom script expressions (See Section `\ref{regs_and_pseudo_regs}`).
+Upon generating the debugger hardware, the user is able to specify the exact **pin** and **port** configuration. Each **pin** is considered a single input wire (in VHDL `STD\_LOGIC`), while each **port** consists of multiple pins grouped together to form a meaningful value (in VHDL `STD\_LOGIC\_VECTOR`). Once the configuration is done, the generated debugger contains registers (refers to pins) and pseudo-registers (refers to ports). These pins and ports are accessible through custom script expressions.
 
 # Script Execution Stages
 
 To enable on-the-fly script evaluation, script execution is divided into several stages. Each stage includes multiple flip-flops, with the number of flip-flops equal to the number of input pins. Additionally, each stage contains a small buffer (which could be either SRAM or flip-flop) that holds the specific operation to be performed in that stage.
 
-After the debugger transmits the script buffer to the debuggee (PL), hwdbg configures these small buffers with the details of the actions (operators and values) required for each stage. The evaluation module then advances the registers to the next stage with each clock cycle. At each stage, the input flip-flops are evaluated according to the script, and the values of the pins may be modified based on the script's instructions. Once the execution completes all stages, the final stage passes the flip-flops to the *Output Policy Stage* (Described in Section `\ref{sec:output_policy_stage}`) before sending them to the output pins. The following figure depicts a 4-stage script evaluation engine. Note that the number of stages is configurable by the hardware engineer. For example, a debugger equipped with more script execution engines can run more operations within a single script, although this results in a larger hardware area (utilized resources in FPGAs).
+After the debugger transmits the script buffer to the debuggee (PL), hwdbg configures these small buffers with the details of the actions (operators and values) required for each stage. The evaluation module then advances the registers to the next stage with each clock cycle. At each stage, the input flip-flops are evaluated according to the script, and the values of the pins may be modified based on the script's instructions. Once the execution completes all stages, the final stage passes the flip-flops to the *Output Policy Stage* before sending them to the output pins. The following figure depicts a 4-stage script evaluation engine. Note that the number of stages is configurable by the hardware engineer. For example, a debugger equipped with more script execution engines can run more operations within a single script, although this results in a larger hardware area (utilized resources in FPGAs).
 
 ![4-Stage Script Evaluation and Execution Engine.](/img/figures/exec-stages.jpg)
 
@@ -41,7 +41,7 @@ typedef struct SYMBOL {
 
 # Output Policy Stage
 
-The last stage before sending flop-flops (possibly modified input) is the *Output Policy Stage*. As its name implies this stage decides how outputs should be sent over the wires (pins). For example, some functions are designed to block output (send zero) which in reality these functions change the policy of this stage and influence the output signal. Other than that, functionalities like stepping through the signals (See Section `\ref{sec:stepping_emulation}`) and pausing the signals (See Section `\ref{sec:pausing_debuggee}`) are implemented by employing this mechanism. The following figure depicts how this mechanism is connected to the script execution stages.
+The last stage before sending flop-flops (possibly modified input) is the *Output Policy Stage*. As its name implies this stage decides how outputs should be sent over the wires (pins). For example, some functions are designed to block output (send zero) which in reality these functions change the policy of this stage and influence the output signal. Other than that, functionalities like stepping through the signals and pausing the signals are implemented by employing this mechanism. The following figure depicts how this mechanism is connected to the script execution stages.
 
 ![Script Evaluation Stages and Output Policy.](/img/figures/exec-stages-and-output-policy.jpg)
 

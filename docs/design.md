@@ -48,7 +48,7 @@ The FPGA development board also includes a processor system (PS) that can be use
 
 # Raw Shared Channel Project for Testing Artifacts
 
-For testing artifacts, a shared PS \<\> PL project has been written to create a channel between the PS and the PL by sharing an 8 KB (can be customized) Block RAM (BRAM) as well as an interrupt line from PL to PS, and a GPIO line from PS to PL. The BRAM is made accessible for both PS and PL communication (See Section `\ref{sec:bram_sim}`). The following figure depicts the high-level design of the PS \<\> PL shared channel in Vivado. \\
+For testing artifacts, a shared PS \<\> PL project has been written to create a channel between the PS and the PL by sharing an 8 KB (can be customized) Block RAM (BRAM) as well as an interrupt line from PL to PS, and a GPIO line from PS to PL. The BRAM is made accessible for both PS and PL communication. The following figure depicts the high-level design of the PS \<\> PL shared channel in Vivado. \\
 
 
 ![High-level Overview of PS \<\> PL Communication Over AXI Bus.](/img/figures/ps-pl-shared-channel.jpg)
@@ -144,7 +144,7 @@ Once valid data is received from either the PS, the interpreting module takes ch
 
 ![The FSM of How Interpreter Module Works.](/img/figures/interpreter-fsm.jpg)
 
-The diagram (See Figure `\ref{fig:interpreter_fsm}`) illustrates the Moore FSM and Figure `\ref{fig:interpreter_wave}` demonstrates the waveform of the interpreter module of the hwdbg hardware debugger. This module is designed to process incoming data packets and generate appropriate responses based on the actions requested by these packets. Initially, the FSM is in the `sIdle` state, where it remains until a valid packet input is received from the receiver module (`requestedActionOfThePacketInputValid = 1`). In this state, no new data is being received or sent by the interpreter (`noNewDataReceiver = 0`, `noNewDataSender = 0`).
+This module is designed to process incoming data packets and generate appropriate responses based on the actions requested by these packets. Initially, the FSM is in the `sIdle` state, where it remains until a valid packet input is received from the receiver module (`requestedActionOfThePacketInputValid = 1`). In this state, no new data is being received or sent by the interpreter (`noNewDataReceiver = 0`, `noNewDataSender = 0`).
 
 ![The Wave Demonstration of How Interpreter Module Works.](/img/figures/wavedrom-interpreter.jpg)
 
