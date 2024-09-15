@@ -1,5 +1,9 @@
-# Evaluation
-In this chapter, the impact of the proposed hardware debugger is discussed and the evaluation result between similar tools (Xilinx ILA) is elaborated. 
+---
+sidebar_position: 2
+---
+
+# dslang vs. Trigger State Machine (TSM)
+In this section, the impact of the proposed hardware debugger is discussed and the evaluation result between similar tools (Xilinx ILA) is elaborated. 
 
 # The Impact of Proposed Hardware
 

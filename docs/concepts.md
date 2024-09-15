@@ -1,5 +1,9 @@
-# Background
-This background section introduces the key concepts and terminologies that are essential in understanding the development and application of hwdbg. This section is divided into four subsections, the first subsection describes high-level hardware design and hardware/software debugging terminologies while the second section talks about debugging modes and new terms that are introduced in hwdbg. The third section explains technical backgrounds related to FPGA and hardware design, and the fourth section explores the previous related works.
+---
+sidebar_position: 4
+---
+
+# Basic Concepts
+This section introduces the key concepts and terminologies that are essential in understanding the development and application of hwdbg. 
 
 # High-level Terminologies
 Different high-level terminologies are explained here.
@@ -36,7 +40,7 @@ In this debugging mode, hwdbg acts as an introspection tool, and monitors differ
 In this debugging mode, hwdbg is able to both monitor and manipulate signals (Input/Output). These signal modifications are configured by the user's custom scripts.
 
 # Technical Terminologies
-Here, the technical terms used in this thesis are explained.
+Here, the technical terms used in this debugger are explained.
 
 ## Programmable Logic (PL) and Processing System (PS) in FPGAs
 

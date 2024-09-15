@@ -82,7 +82,7 @@ const config = {
           {to: 'https://hwdbg.hyperdbg.org/api', label: 'API', position: 'left'},
           {to: 'https://github.com/HyperDbg/hwdbg-fpga', label: 'FPGA Boards', position: 'left'},
           {
-			href: "https://github.com/HyperDbg/hwdbg",
+			href: "https://github.com/HyperDbg/HyperDbg/tree/master/hwdbg",
 			position: "right",
 			className: "header-github-link",
 			"aria-label": "GitHub repository",
@@ -121,12 +121,16 @@ const config = {
                 href: 'https://t.me/HyperDbg',
               },
               {
-                label: 'Mastodon',
-                href: 'https://infosec.exchange/@hyperdbg',
+                label: 'Discord',
+                href: 'https://discord.gg/anSPsGUtzN',
               },
               {
-                label: 'YouTube',
-                href: 'https://youtube.com/c/HyperDbg',
+                label: 'Matrix',
+                href: 'https://matrix.to/#/#hyperdbg-discussion:matrix.org',
+              },
+              {
+                label: 'Mastodon',
+                href: 'https://infosec.exchange/@hyperdbg',
               },
               {
                 label: 'Twitter',
@@ -138,24 +142,16 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'hwdbg GitHub',
-                href: 'https://github.com/HyperDbg/hwdbg',
+                label: 'Source',
+                href: 'https://github.com/HyperDbg/HyperDbg/tree/master/hwdbg',
               },               
 			  {
-                label: 'HyperDbg Research',
+                label: 'Research',
                 href: 'https://research.hyperdbg.org',
               },              
 			  {
                 label: 'HyperDbg GitHub',
                 href: 'https://github.com/HyperDbg',
-              },
-              {
-                label: 'HyperDbg Documentation',
-                href: 'https://docs.hyperdbg.org',
-              },
-              {
-                label: 'HyperDbg Debugger',
-                href: 'https://github.com/HyperDbg/HyperDbg',
               },
             ],
           },

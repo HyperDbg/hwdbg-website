@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Hardware Debugging, Reversing & Fuzzing
 This section discusses the chip debugging terms and reverse engineering in hwdbg.
 

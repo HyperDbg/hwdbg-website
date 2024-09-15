@@ -1,47 +1,78 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Tutorial Intro
+# Getting Started
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Here's a detailed guide on how to get started with the hwdbg debugger.
 
-## Getting Started
+## Deployment Board 
 
-Get started by **creating a new site**.
+[This repository](https://github.com/HyperDbg/hwdbg-fpga) contains pre-built TCL files to facilitate project creation for running **hwdbg** on various FPGA development boards.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Output 
 
-### What you'll need
+For generating SystemVerilog files, you need to install [Chisel](https://www.chisel-lang.org/docs/installation). Once installed, use the following commands:
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```sh
+$ sbt run
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+This command prompts you to select a component. The `hwdbg.Main` class contains the debugger for synthesis purposes, while the `hwdbg.MainWithInitializedBRAM` class includes a pre-initialized Block RAM (BRAM), primarily for simulation and testing.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+After selecting the appropriate class for synthesis (option `1`) or simulation (option `2`), the output should look like this:
 
-## Start your site
+```sh
+$ sbt run
+[info] welcome to sbt 1.9.7 (Eclipse Adoptium Java 17.0.10)
+[info] loading settings for project -build-build-build from metals.sbt ...
+[info] loading project definition from /home/sina/HyperDbg//project/project/project
+[info] loading settings for project -build-build from metals.sbt ...
+[info] loading project definition from /home/sina/HyperDbg//project/project
+[success] Generated .bloop/-build-build.json
+[success] Total time: 1 s, completed Apr 16, 2024, 1:49:05 PM
+[info] loading settings for project -build from metals.sbt,plugins.sbt ...
+[info] loading project definition from /home/sina/HyperDbg//project
+[success] Total time: 0 s, completed Apr 16, 2024, 1:49:05 PM
+[info] loading settings for project root from build.sbt ...
+[info] set current project to hwdbg (in build file:/home/sina/HyperDbg/hwdbg/)
 
-Run the development server:
+Multiple main classes detected. Select one to run:
+ [1] hwdbg.Main
+ [2] hwdbg.MainWithInitializedBRAM
 
-```bash
-cd my-website
-npm run start
+Enter number: 2
+[info] running hwdbg.MainWithInitializedBRAM
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+The generated code for the debugger can be found in the `generated` directory.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+## Testbenches
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+To test **hwdbg**, [cocotb](https://www.cocotb.org/) should be installed. After that, first, run the debugger (generated SystemVerilog files) and then run the following commands:
+
+```sh
+cd sim/hwdbg/DebuggerModuleTestingBRAM
+./test.sh
+```
+
+The above command generates a waves file at `./sim/hwdbg/DebuggerModuleTestingBRAM/sim_build/DebuggerModuleTestingBRAM.fst` which can be read using [GTKWave](https://gtkwave.sourceforge.net/).
+
+```sh
+cd sim/hwdbg/DebuggerModuleTestingBRAM
+gtkwave ./sim_build/DebuggerModuleTestingBRAM.fst
+```
+
+### ModelSim
+
+If you prefer to use ModelSim instead of GTKWave, you can configure the `modelsim.config` file. Please visit <a href="https://github.com/HyperDbg/hwdbg/blob/main/sim/modelsim/README.md">here</a> for more information.
+
+## API
+
+If you want to create the latest version of API documentation, you can run the following command:
+
+```sh
+$ sbt doc
+```
+
+This will generate documentation at `./target/scala-{version}/api/index.html`.
