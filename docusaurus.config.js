@@ -81,6 +81,7 @@ const config = {
           {to: '/docs', label: 'Documentation', position: 'left'},
           {to: 'https://hwdbg.hyperdbg.org/api', label: 'API', position: 'left'},
           {to: 'https://github.com/HyperDbg/hwdbg-fpga', label: 'FPGA Boards', position: 'left'},
+          {to: 'https://hwdbg.hyperdbg.org/generate', label: 'Generate Custom Debugger Online!', position: 'left'},
           {
 			href: "https://github.com/HyperDbg/HyperDbg/tree/master/hwdbg",
 			position: "right",
@@ -99,6 +100,10 @@ const config = {
                 label: 'Getting Started',
                 to: '/docs/getting-started',
               },     
+			  {
+                label: 'Generate Custom Debugger Online!',
+                to: 'https://hwdbg.hyperdbg.org/generate',
+              },      
 			  {
                 label: 'API',
                 to: 'https://hwdbg.hyperdbg.org/api',
